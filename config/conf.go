@@ -29,9 +29,17 @@ type DBConfig struct {
 // 메인 로드 함수
 func LoadConfig() *Config {
 	// .env 파일 로드
-	err := godotenv.Load()
-	if err != nil {
-		panic(".env 파일을 불러올 수 없습니다")
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	panic(".env 파일을 불러올 수 없습니다")
+	// }
+
+	if os.Getenv("RENDER") == "" {
+		err := godotenv.Load()
+		if err != nil {
+			// 로그만 출력하고 넘어감
+			println("로컬 환경: .env 파일을 불러올 수 없습니다")
+		}
 	}
 
 	return &Config{
