@@ -1,0 +1,18 @@
+go mod init my-homepage
+
+// http 콜
+go get github.com/gorilla/mux
+
+
+git init
+git branch -M main
+git remote add origin https://github.com/wenericano/my_homepage.git
+git add .
+git commit -m "first commit"
+git push -u origin main
+
+
+
+// .env 파일 할수 있도록
+go get github.com/joho/godotenv
+
