@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>쌈빡한 개발자</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="public/js.js"></script>
+    <script type="module" src="public/common.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Pretendard Variable"', 'sans-serif'],
+                    }
+                }
+            }
+        };
+    </script>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out both;
+        }
+        .clickBtn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            padding: 10px 20px;
+            background-image: url('./image/photo.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            animation: fadeInUp 0.8s ease-out both;
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white font-sans">
+
+    <!-- 헤더 -->
+    <header class="w-full bg-gray-800 dark:bg-gray-900 flex justify-between items-center px-8 py-4 fixed top-0 left-0 right-0 z-40 shadow-md">
+        <!-- 로그인 입력창 -->
+        <div class="flex space-x-4">
+            <!-- 로고 -->
+            <a href="/" class="flex items-center space-x-4">
+                <img src="./image/logo.png" alt="SsamBak DevLord Logo" class="w-24 object-contain" />
+            </a>
+        </div>
+        <!-- 버튼 + 다크모드 토글 -->
+        <div class="flex items-center space-x-4">
+            <button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded shadow text-white" id="test" onclick="location.href='./stock.html'">AI</button>
+            <button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded shadow text-white" id="login">Login</button>
+            <button class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded shadow text-white" id="signup">Sign Up</button>
+            <button id="themeToggle" class="text-white text-xl hover:scale-110 transition">🌙</button>
+        </div>
+    </header>
+
+    <!-- 히어로 섹션 -->
+    <section class="min-h-screen flex items-center justify-center bg-gradient-to-r from-violet-600 via-purple-500 to-pink-500 text-white text-center pt-32 px-6">
+        <div>
+          <h1 class="text-6xl font-bold mb-6 animate-fade-in-up leading-snug">
+            안녕하세요,<br>
+            <span class="text-yellow-300">기술로 설계하고 디테일로 완성하는</span><br>
+            개발자 입니다!
+          </h1>
+          <p class="text-xl opacity-90 animate-fade-in-up animation-delay-200 mt-6">
+            균형 잡힌 구조 위에, 감각적인 웹을 만듭니다.
+          </p>
+        </div>
+      </section>
+      
+
+    <!-- 프로젝트 섹션 -->
+    <section class="py-20 px-6 max-w-7xl mx-auto">
+        <h2 class="text-4xl font-bold text-center mb-14">✨ 진행한 프로젝트</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:-translate-y-1 transition">
+                <h3 class="text-2xl font-semibold mb-3">KB 스탁론</h3>
+                <p class="text-sm">KB 증권, 키움 캐피탈 연계 RMS 스탁론 개발</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:-translate-y-1 transition">
+                <h3 class="text-2xl font-semibold mb-3">HANA 스탁론</h3>
+                <p class="text-sm">하나 증권, 키움 캐피탈 연계 RMS 스탁론 개발</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:-translate-y-1 transition">
+                <h3 class="text-2xl font-semibold mb-3">Binary Option</h3>
+                <p class="text-sm">자체 거래 플랫폼 CRM 구축</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:-translate-y-1 transition">
+                <h3 class="text-2xl font-semibold mb-3">한사랑</h3>
+                <p class="text-sm">한사랑 병원 관리 및 수납 시스템 플랫폼 구축</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:-translate-y-1 transition">
+                <h3 class="text-2xl font-semibold mb-3">Lesse</h3>
+                <p class="text-sm">부동산 조각 투자 플랫폼 구축</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:-translate-y-1 transition">
+                <h3 class="text-2xl font-semibold mb-3">MTS 리뉴얼</h3>
+                <p class="text-sm">신영증권 MTS - 특화서비스 부분 개발</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:-translate-y-1 transition">
+                <h3 class="text-2xl font-semibold mb-3">Ultima 프로젝트</h3>
+                <p class="text-sm">자체 거래 플랫폼 HTS 리뉴얼</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:-translate-y-1 transition">
+                <h3 class="text-2xl font-semibold mb-3">운영</h3>
+                <p class="text-sm">해외선물, 국내 파생상품 운영 및 개발</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:-translate-y-1 transition">
+                <h3 class="text-2xl font-semibold mb-3">GAMA</h3>
+                <p class="text-sm">OTT 연계 모션 시뮬레이션 서버 및 클라이언트 개발</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 메뉴 카드 섹션 -->
+    <section class="bg-gray-100 dark:bg-gray-800 py-16 px-6">
+        <h2 class="text-3xl font-bold text-center mb-12">📁 기능 메뉴</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <div onclick="my()" class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow hover:shadow-lg transition">
+                <h4 class="text-lg font-semibold mb-2">Click</h4>
+                <p class="text-sm text-gray-500 dark:text-gray-300">버튼 클릭 기능 테스트</p>
+            </div>
+            <div onclick="lotto()" class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow hover:shadow-lg transition">
+                <h4 class="text-lg font-semibold mb-2">Lotto 1</h4>
+                <p class="text-sm text-gray-500 dark:text-gray-300">로또 숫자 자동 생성기</p>
+            </div>
+            <div onclick="lotto_()" class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow hover:shadow-lg transition">
+                <h4 class="text-lg font-semibold mb-2">Lotto 2</h4>
+                <p class="text-sm text-gray-500 dark:text-gray-300">로또 결과 비교 기능</p>
+            </div>
+            <div onclick="spec()" class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow hover:shadow-lg transition">
+                <h4 class="text-lg font-semibold mb-2">Game</h4>
+                <p class="text-sm text-gray-500 dark:text-gray-300">미니 게임 공간</p>
+            </div>
+            <div onclick="diff()" class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow hover:shadow-lg transition">
+                <h4 class="text-lg font-semibold mb-2">???</h4>
+                <p class="text-sm text-gray-500 dark:text-gray-300">아직 공개되지 않은 비밀</p>
+            </div>
+            <div onclick="test()" class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow hover:shadow-lg transition">
+                <h4 class="text-lg font-semibold mb-2">Menu</h4>
+                <p class="text-sm text-gray-500 dark:text-gray-300">메인 메뉴 네비게이션</p>
+            </div>
+            <div onclick="luck()" class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow hover:shadow-lg transition">
+                <h4 class="text-lg font-semibold mb-2">Lucky</h4>
+                <p class="text-sm text-gray-500 dark:text-gray-300">오늘의 행운 보기</p>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="text-center py-10 text-sm text-gray-500 dark:text-gray-400">
+        &copy; 2025 쌈빡한 개발자. All rights reserved.
+    </footer>
+
+    <!-- 로그인 모달 -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex justify-center items-center">
+        <div class="bg-white dark:bg-gray-800 text-black dark:text-white rounded-lg shadow-lg p-8 w-full max-w-md mx-4 relative">
+            <h2 class="text-2xl font-bold mb-6 text-center">로그인</h2>
+            <div class="space-y-4">
+                <input type="text" placeholder="아이디" id="username" onkeyup="enterkey()" class="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
+                <input type="password" placeholder="패스워드" id="password" onkeyup="enterkey()" class="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
+            </div>
+            <div class="flex justify-end space-x-4 mt-6">
+                <button onclick="closeLoginModal()" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 rounded text-black dark:text-white hover:bg-gray-400">Cancel</button>
+                <button onclick="login()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded">Login</button>
+            </div>
+            <button onclick="closeLoginModal()" class="absolute top-2 right-3 text-2xl font-bold text-gray-500 hover:text-gray-700 dark:text-gray-300">&times;</button>
+        </div>
+    </div>
+
+    <!-- 회원가입 모달 -->
+    <div id="signupModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex justify-center items-center">
+        <div class="bg-white dark:bg-gray-800 text-black dark:text-white rounded-lg shadow-lg p-8 w-full max-w-md mx-4 relative">
+            <h2 class="text-2xl font-bold mb-6 text-center">회원가입</h2>
+            <div class="space-y-4">
+                <input type="text" placeholder="아이디" class="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
+                <input type="password" placeholder="패스워드" class="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
+                <input type="text" placeholder="유저네임" class="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
+            </div>
+            <div class="flex justify-end space-x-4 mt-6">
+                <button onclick="closeSignupModal()" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 rounded text-black dark:text-white hover:bg-gray-400">Cancel</button>
+                <button onclick="signup()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded">Sign Up</button>
+            </div>
+            <button onclick="closeSignupModal()" class="absolute top-2 right-3 text-2xl font-bold text-gray-500 hover:text-gray-700 dark:text-gray-300">&times;</button>
+        </div>
+    </div>
+
+    <button class="clickBtn" onclick="location.href='/w.html'"></button>
+
+    <!-- 리자몽 이미지 -->
+    <!-- <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" class="fixed bottom-6 right-6 w-32 h-32 animate-bounce select-none pointer-events-none" /> -->
+
+</body>
+</html>
