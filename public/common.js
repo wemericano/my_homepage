@@ -1,5 +1,5 @@
 // common.js
-console.log("COMMON LOADED");
+console.log("[🎵] COMMON LOADED");
 
 // 다크모드 토글
 export function initDarkMode() {
@@ -57,4 +57,13 @@ export class API {
             throw err;
         }
     }
+}
+
+// 페이지 이동
+export function goTo(url) {
+  if (!url || typeof url !== "string") {
+      console.warn("유효하지 않은 URL입니다:", url);
+      return;
+  }
+  window.location.href = url;
 }

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>메인 페이지</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #goBackBtn {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        cursor: default;       /* 마우스 커서 안 바뀌게 */
+        -webkit-tap-highlight-color: transparent; /* 모바일 하이라이트 제거 */
+      }
+
+      #goBackBtn:focus {
+            outline: none; /* 포커스 테두리 제거 */
+        }   
+
+      #goBackBtn img {
+        width: 50px;
+        height: 50px;
+        user-select: none;
+      }
+
+      #goBackBtn:hover img {
+        transform: translateX(-3px);
+      }
+    </style>
+  </head>
+  <body>
+    <button id="goBackBtn">
+      <img src="/assets/icons/icon_breadcrumb.svg" alt="뒤로가기" />
+    </button>
+
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>
