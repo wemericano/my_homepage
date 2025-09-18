@@ -16,3 +16,5 @@ git push -u origin main
 // .env 파일 할수 있도록
 go get github.com/joho/godotenv
 
+netstat -ano | findstr :126
+taskkill /PID 95132 /F

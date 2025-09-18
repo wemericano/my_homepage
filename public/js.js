@@ -1,4 +1,4 @@
-console.log("[🎵] JS LOADED");
+console.log("🎵 JS LOADED");
 import * as Common from "./common.js";
 
 // 공통 엘리먼트

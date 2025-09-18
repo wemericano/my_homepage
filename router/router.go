@@ -1,7 +1,7 @@
 package router
 
 import (
-	"my-homepage/service"
+	"my-homepage/handler"
 
 	"github.com/gin-gonic/gin"
 )
@@ -21,11 +21,12 @@ func SetupRouter(r *gin.Engine) {
 	api := r.Group("/api")
 
 	// 회원가입
-	api.POST("/signup", service.AddSignup)
+	api.POST("/signup", handler.AddSignup)
 
 	// 로그인
-	api.POST("/login", service.Login)
+	api.POST("/login", handler.Login)
 
 	// lotto
-	api.POST("/lotto", service.GetLottoList)
+	api.POST("/lotto", handler.GetLottoList)
+	api.POST("/analyze/v1", handler.AnalyzeV1)
 }

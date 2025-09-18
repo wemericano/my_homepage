@@ -1,13 +1,18 @@
-import { initPage } from '/js/common.js';
-initPage(PageController);
+import BasePageController from "../base/BasePageController.js";
 
-class PageController {
-  constructor() {
-  }
+class MainPageController extends BasePageController {
+    constructor(router, pageHolder) {
+        super(router, pageHolder);
+    }
 
-  pageInit() {
-    console.log('페이지 초기화됨');
-  }
+    pageInit() {
+        super.pageInit();
+
+    }
+
 }
 
-
+document.addEventListener("DOMContentLoaded", () => {
+    const controller = new MainPageController();
+    controller.pageInit();
+});

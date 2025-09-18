@@ -1,5 +1,4 @@
-// common.js
-console.log("[🎵] COMMON LOADED");
+console.log("🎵 COMMON LOADED");
 
 // 다크모드 토글
 export function initDarkMode() {
@@ -57,6 +56,11 @@ export class API {
             throw err;
         }
     }
+}
+
+// API 클래스를 전역으로 노출
+if (typeof window !== 'undefined') {
+    window.API = API;
 }
 
 // 페이지 이동
