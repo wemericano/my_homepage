@@ -29,4 +29,5 @@ func SetupRouter(r *gin.Engine) {
 	// lotto
 	api.POST("/lotto", handler.GetLottoList)
 	api.POST("/analyze/v1", handler.AnalyzeV1)
+	api.POST("/analyze/v2", handler.AnalyzeV2)
 }
