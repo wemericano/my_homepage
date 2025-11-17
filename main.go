@@ -39,9 +39,11 @@ func main() {
 
 	database, err := db.Open(dbConfig)
 	if err != nil {
-		log.Fatal("DB 연결 실패:", err)
+		log.Println("DB 연결 실패:", err)
+	} else {
+		defer database.Close()
+		log.Println("[MAIN] DB SUCCESS")
 	}
-	defer database.Close()
 
 	log.Println("[MAIN] DB SUCCESS")
 
