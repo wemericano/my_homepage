@@ -149,6 +149,64 @@ function closeLoginModal() {
     }
 }
 
+// Enter 키로 로그인 (index.html의 onkeyup에서 사용)
+function enterkey(event) {
+    if (event && event.key === "Enter") {
+        login();
+    }
+}
+
+// 로그인 실행 함수 (index.html의 onclick에서 사용)
+function login() {
+    const username = document.getElementById("username");
+    const password = document.getElementById("password");
+    
+    if (!username || !password) {
+        // 동적으로 생성된 모달 사용
+        const loginId = document.getElementById("loginId");
+        const loginPassword = document.getElementById("loginPassword");
+        if (loginId && loginPassword) {
+            const id = loginId.value;
+            const pwd = loginPassword.value;
+            
+            Common.API.POST("/api/login", { id, password: pwd })
+            .then((res) => {
+                if (res.data) {
+                    Common.goTo("/page/main.html");
+                    closeLoginModal();
+                } else {
+                    const m_error = document.getElementById("loginError");
+                    if (m_error) {
+                        m_error.innerText = "아이디 또는 비밀번호가 올바르지 않습니다.";
+                        m_error.classList.remove("hidden");
+                    }
+                }
+            })
+            .catch((err) => {
+                console.error("로그인 오류:", err);
+            });
+        }
+        return;
+    }
+    
+    // HTML에 하드코딩된 모달 사용
+    const id = username.value;
+    const pwd = password.value;
+    
+    Common.API.POST("/api/login", { id, password: pwd })
+    .then((res) => {
+        if (res.data) {
+            Common.goTo("/page/main.html");
+            closeLoginModal();
+        } else {
+            alert("아이디 또는 비밀번호가 올바르지 않습니다.");
+        }
+    })
+    .catch((err) => {
+        console.error("로그인 오류:", err);
+        alert("로그인 중 오류가 발생했습니다.");
+    });
+}
 
 // 디펜스게임
 if (defenseBtn) {
@@ -156,4 +214,76 @@ if (defenseBtn) {
         console.log("디펜스게임");
         location.href = "./page/defense.html";
     });
+}
+
+// 페이지 이동 함수들
+function defense() {
+    location.href = "./page/defense.html";
+}
+
+function lotto() {
+    location.href = "./page/main.html";
+}
+
+function lotto_() {
+    location.href = "./page/main.html";
+}
+
+function spec() {
+    alert("게임 기능은 준비 중입니다.");
+}
+
+function diff() {
+    alert("아직 공개되지 않은 비밀입니다.");
+}
+
+function test() {
+    alert("메뉴 기능은 준비 중입니다.");
+}
+
+function luck() {
+    alert("오늘의 행운: 좋은 일이 있을 것입니다! 🍀");
+}
+
+// 회원가입 실행 함수
+function signup() {
+    const signupModal = document.getElementById("signupModal");
+    if (!signupModal) {
+        openSignupModal();
+        return;
+    }
+    
+    // HTML에 하드코딩된 모달 사용
+    const inputs = signupModal.querySelectorAll("input");
+    if (inputs.length >= 3) {
+        const id = inputs[0].value;
+        const password = inputs[1].value;
+        const username = inputs[2].value;
+        
+        Common.API.POST("/api/signup", { id, password, username })
+        .then((res) => {
+            alert("회원가입이 완료되었습니다.");
+            closeSignupModal();
+        })
+        .catch((err) => {
+            console.error("회원가입 오류:", err);
+            alert("회원가입 중 오류가 발생했습니다.");
+        });
+    }
+}
+
+// 전역 함수로 노출
+if (typeof window !== 'undefined') {
+    window.enterkey = enterkey;
+    window.login = login;
+    window.closeLoginModal = closeLoginModal;
+    window.closeSignupModal = closeSignupModal;
+    window.defense = defense;
+    window.lotto = lotto;
+    window.lotto_ = lotto_;
+    window.spec = spec;
+    window.diff = diff;
+    window.test = test;
+    window.luck = luck;
+    window.signup = signup;
 }
