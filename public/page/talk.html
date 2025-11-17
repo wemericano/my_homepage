@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>We Talk! - 메신저</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .chat-item:hover { background: #f3f4f6; }
+        .chat-item.active { background: #e5e7eb; }
+        .message-sent { background: #3b82f6; color: white; margin-left: auto; }
+        .message-received { background: #f3f4f6; color: #1f2937; }
+    </style>
+</head>
+<body class="bg-gray-100 h-screen">
+    <!-- 헤더 -->
+    <header class="bg-white shadow-sm h-16 flex items-center justify-between px-6">
+        <div class="flex items-center space-x-4">
+            <button onclick="goBack()" class="p-2 hover:bg-gray-100 rounded-lg">←</button>
+            <h1 class="text-xl font-bold">We Talk!</h1>
+        </div>
+        <button id="themeToggle" class="p-2 hover:bg-gray-100 rounded-lg">🌙</button>
+    </header>
+
+    <!-- 메인 콘텐츠 -->
+    <div class="flex h-[calc(100vh-4rem)]">
+        <!-- 왼쪽 사이드바 - 채팅방 목록 -->
+        <div class="w-80 bg-white border-r border-gray-200 flex flex-col">
+            <!-- 검색창 -->
+            <div class="p-4 border-b border-gray-200">
+                <input type="text" placeholder="채팅방 검색..." class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+            </div>
+
+            <!-- 채팅방 목록 -->
+            <div class="flex-1 overflow-y-auto">
+                <div class="chat-item p-4 border-b border-gray-100 cursor-pointer active" onclick="selectChat(1)">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">김</div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold">김개발</h3>
+                            <p class="text-sm text-gray-500">안녕하세요! 프로젝트 진행상황은 어떤가요?</p>
+                        </div>
+                        <span class="text-xs text-gray-500">오후 2:30</span>
+                    </div>
+                </div>
+
+                <div class="chat-item p-4 border-b border-gray-100 cursor-pointer" onclick="selectChat(2)">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-semibold">이</div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold">이디자인</h3>
+                            <p class="text-sm text-gray-500">UI 디자인 시안 완성했습니다!</p>
+                        </div>
+                        <span class="text-xs text-gray-500">오후 1:45</span>
+                    </div>
+                </div>
+
+                <div class="chat-item p-4 border-b border-gray-100 cursor-pointer" onclick="selectChat(3)">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white font-semibold">박</div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold">박기획</h3>
+                            <p class="text-sm text-gray-500">회의 일정 조정 부탁드립니다</p>
+                        </div>
+                        <span class="text-xs text-gray-500">오전 11:20</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 오른쪽 메인 영역 - 채팅 내용 -->
+        <div class="flex-1 flex flex-col">
+            <!-- 채팅 헤더 -->
+            <div class="bg-white border-b border-gray-200 p-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">김</div>
+                    <div>
+                        <h2 class="font-semibold">김개발</h2>
+                        <p class="text-sm text-green-500">온라인</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 채팅 메시지 영역 -->
+            <div class="flex-1 overflow-y-auto p-4 space-y-4" id="chatMessages">
+                <div class="flex items-start space-x-2">
+                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm">김</div>
+                    <div class="message-received p-3 rounded-lg max-w-xs">
+                        안녕하세요! 프로젝트 진행상황은 어떤가요?
+                    </div>
+                    <span class="text-xs text-gray-500 self-end">오후 2:30</span>
+                </div>
+
+                <div class="flex items-start space-x-2 justify-end">
+                    <span class="text-xs text-gray-500 self-end">오후 2:32</span>
+                    <div class="message-sent p-3 rounded-lg max-w-xs">
+                        네, 잘 진행되고 있습니다! 현재 백엔드 API 개발 중이에요.
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-2">
+                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm">김</div>
+                    <div class="message-received p-3 rounded-lg max-w-xs">
+                        좋네요! 프론트엔드는 언제쯤 시작하실 예정인가요?
+                    </div>
+                    <span class="text-xs text-gray-500 self-end">오후 2:35</span>
+                </div>
+
+                <div class="flex items-start space-x-2 justify-end">
+                    <span class="text-xs text-gray-500 self-end">오후 2:37</span>
+                    <div class="message-sent p-3 rounded-lg max-w-xs">
+                        내일부터 시작할 예정입니다. 디자인 시안이 나오면 바로 작업하겠습니다!
+                    </div>
+                </div>
+            </div>
+
+            <!-- 메시지 입력 영역 -->
+            <div class="bg-white border-t border-gray-200 p-4">
+                <div class="flex items-center space-x-2">
+                    <input type="text" placeholder="메시지를 입력하세요..." class="flex-1 px-4 py-2 border border-gray-300 rounded-lg" id="messageInput">
+                    <button onclick="sendMessage()" class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">전송</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function selectChat(chatId) {
+            document.querySelectorAll('.chat-item').forEach(item => item.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            if (message) {
+                const chatMessages = document.getElementById('chatMessages');
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: true });
+                
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'flex items-start space-x-2 justify-end';
+                messageDiv.innerHTML = `
+                    <span class="text-xs text-gray-500 self-end">${timeString}</span>
+                    <div class="message-sent p-3 rounded-lg max-w-xs">${message}</div>
+                `;
+                
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                input.value = '';
+            }
+        }
+
+        document.getElementById('messageInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
