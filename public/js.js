@@ -4,6 +4,7 @@ import * as Common from "./common.js";
 // 공통 엘리먼트
 const signupBtn = document.getElementById("signup");
 const loginBtn = document.getElementById("login");
+const defenseBtn = document.getElementById("defense");
 
 let signupModal = null;
 let loginModal = null;
@@ -146,4 +147,13 @@ function closeLoginModal() {
     if (loginModal) {
         loginModal.classList.add("hidden");
     }
+}
+
+
+// 디펜스게임
+if (defenseBtn) {
+    defenseBtn.addEventListener("click", () => {
+        console.log("디펜스게임");
+        location.href = "./page/defense.html";
+    });
 }
