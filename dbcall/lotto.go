@@ -8,7 +8,7 @@ import (
 func GetLottoList() ([]model.GetLottoList, error) {
 	rows, err := db.DB.Query(`
         SELECT index_no, no1, no2, no3, no4, no5, no6
-        FROM number_list
+        FROM dbo.number_list
         ORDER BY index_no DESC
     `)
 	if err != nil {

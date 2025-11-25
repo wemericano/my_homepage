@@ -7,8 +7,8 @@ import (
 	db "my-homepage/database"
 	"my-homepage/router"
 
+	_ "github.com/denisenkom/go-mssqldb"
 	"github.com/gin-gonic/gin"
-	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
@@ -36,15 +36,15 @@ func main() {
 		MaxOpen:     100,
 		MaxLifeTime: 10,
 	}
+	log.Println("[MAIN] DB 연결 시도 중...")
+	log.Printf("[MAIN] DB 설정 - Host: %s, Port: %s, User: %s, DBName: %s",
+		dbConfig.Address, dbConfig.Port, dbConfig.User, dbConfig.Scheme)
 
 	database, err := db.Open(dbConfig)
 	if err != nil {
-		log.Println("DB 연결 실패:", err)
-	} else {
-		defer database.Close()
-		log.Println("[MAIN] DB SUCCESS")
+		log.Fatal("DB 연결 실패:", err)
 	}
-
+	defer database.Close()
 	log.Println("[MAIN] DB SUCCESS")
 
 	// 서버 실행
