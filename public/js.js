@@ -286,4 +286,5 @@ if (typeof window !== 'undefined') {
     window.test = test;
     window.luck = luck;
     window.signup = signup;
+    window.binary_option = binary_option;
 }
