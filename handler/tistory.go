@@ -17,4 +17,9 @@ func UploadToTistory(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "FAIL"})
 		return
 	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code":    "SUCCESS",
+		"message": "티스토리 업로드 요청이 처리되었습니다.",
+	})
 }
