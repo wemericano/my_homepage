@@ -48,6 +48,40 @@
             transition: background-color 0.3s ease, transform 0.2s ease;
             animation: fadeInUp 0.8s ease-out both;
         }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #1f2937;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1000;
+            margin-top: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            padding-top: 4px;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown.active .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s;
+        }
+        .dropdown-content a:hover {
+            background-color: #374151;
+        }
     </style>
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white font-sans">
@@ -63,9 +97,23 @@
         </div>
         <!-- 버튼 + 다크모드 토글 -->
         <div class="flex items-center space-x-4">
-            <button class="btn_box" data-text="binary_option" id="binary_option" onclick="location.href='./page/bo.html'">binary_option</button>
-            <button class="btn_box" data-text="BLOG" id="blog" onclick="openBlogModal()">BLOG</button>
-            <button class="btn_box" data-text="We Talk!" id="test" onclick="location.href='./page/talk.html'">We Talk!</button>
+            <!-- 드롭다운 1 -->
+            <div class="dropdown">
+                <button class="btn_box" data-text="Main">Main</button>
+                <div class="dropdown-content">
+                    <a href="#" class="blog-link">Blog</a>
+                    <a href="/public/privacy.html">Song1</a>
+                    <a href="/public/terms.html">Song2</a>
+                </div>
+            </div>
+            <!-- 드롭다운 2 -->
+            <div class="dropdown">
+                <button class="btn_box" data-text="Sub">Sub</button>
+                <div class="dropdown-content">
+                    <a href="./page/bo.html">binary_option</a>
+                    <a href="./page/talk.html">We Talk!</a>
+                </div>
+            </div>
             <button class="btn_box" data-text="Login" id="login">Login</button>
             <button class="btn_box" data-text="Sign Up" id="signup">Sign Up</button>
             <button id="themeToggle" class="text-white text-xl hover:scale-110 transition">🌙</button>
@@ -218,6 +266,49 @@
 
     <!-- 리자몽 이미지 -->
     <!-- <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" class="fixed bottom-6 right-6 w-32 h-32 animate-bounce select-none pointer-events-none" /> -->
+
+    <script>
+        // 드롭다운 클릭 및 호버 이벤트
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdowns = document.querySelectorAll('.dropdown');
+            dropdowns.forEach(dropdown => {
+                const button = dropdown.querySelector('button');
+                
+                // 클릭 이벤트
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    dropdown.classList.toggle('active');
+                });
+            });
+            
+            // 외부 클릭 시 드롭다운 닫기 (클릭으로 열린 경우만)
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.dropdown')) {
+                    dropdowns.forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+            });
+            
+            // BLOG 링크 클릭 이벤트
+            const blogLink = document.querySelector('.blog-link');
+            if (blogLink) {
+                blogLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (typeof window.openBlogModal === 'function') {
+                        window.openBlogModal();
+                    } else {
+                        // 함수가 아직 로드되지 않았으면 잠시 후 다시 시도
+                        setTimeout(() => {
+                            if (typeof window.openBlogModal === 'function') {
+                                window.openBlogModal();
+                            }
+                        }, 100);
+                    }
+                });
+            }
+        });
+    </script>
 
 </body>
 </html>
