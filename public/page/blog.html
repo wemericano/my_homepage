@@ -134,6 +134,45 @@
             white-space: pre-wrap;
             line-height: 1.6;
         }
+        .blog-type-group {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .blog-type-label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .radio-item input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        .radio-item label {
+            cursor: pointer;
+            font-size: 15px;
+            color: #555;
+        }
+        .category-group {
+            display: block;
+        }
+        .category-group.hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -146,33 +185,55 @@
     <div class="container">
         <h1 style="margin-bottom: 30px; text-align: center;">블로그 생성</h1>
         
-        <div class="form-group">
-            <label for="mainCategory">큰제목</label>
-            <select id="mainCategory">
-                <option value="">선택하세요</option>
-                <option value="IT">IT</option>
-                <option value="개발">개발</option>
-                <option value="프로그래밍">프로그래밍</option>
-                <option value="웹개발">웹개발</option>
-                <option value="모바일">모바일</option>
-                <option value="인공지능">인공지능</option>
-                <option value="보안">보안</option>
-                <option value="데이터베이스">데이터베이스</option>
-                <option value="클라우드">클라우드</option>
-                <option value="DevOps">DevOps</option>
-                <option value="프론트엔드">프론트엔드</option>
-                <option value="백엔드">백엔드</option>
-                <option value="풀스택">풀스택</option>
-                <option value="알고리즘">알고리즘</option>
-                <option value="네트워크">네트워크</option>
-            </select>
+        <!-- 블로그 타입 선택 -->
+        <div class="blog-type-group">
+            <label class="blog-type-label">블로그 타입</label>
+            <div class="radio-group">
+                <div class="radio-item">
+                    <input type="radio" id="blogTypeHot" name="blogType" value="hot" checked>
+                    <label for="blogTypeHot">Hot</label>
+                </div>
+                <div class="radio-item">
+                    <input type="radio" id="blogTypeNews" name="blogType" value="news">
+                    <label for="blogTypeNews">News</label>
+                </div>
+                <div class="radio-item">
+                    <input type="radio" id="blogTypeCustom" name="blogType" value="custom">
+                    <label for="blogTypeCustom">직접입력</label>
+                </div>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="subCategory">작은제목</label>
-            <select id="subCategory">
-                <option value="">먼저 큰제목을 선택하세요</option>
-            </select>
+        <!-- 카테고리 선택 (직접입력일 때만 표시) -->
+        <div class="category-group hidden" id="categoryGroup">
+            <div class="form-group">
+                <label for="mainCategory">큰제목</label>
+                <select id="mainCategory">
+                    <option value="">선택하세요</option>
+                    <option value="IT">IT</option>
+                    <option value="개발">개발</option>
+                    <option value="프로그래밍">프로그래밍</option>
+                    <option value="웹개발">웹개발</option>
+                    <option value="모바일">모바일</option>
+                    <option value="인공지능">인공지능</option>
+                    <option value="보안">보안</option>
+                    <option value="데이터베이스">데이터베이스</option>
+                    <option value="클라우드">클라우드</option>
+                    <option value="DevOps">DevOps</option>
+                    <option value="프론트엔드">프론트엔드</option>
+                    <option value="백엔드">백엔드</option>
+                    <option value="풀스택">풀스택</option>
+                    <option value="알고리즘">알고리즘</option>
+                    <option value="네트워크">네트워크</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="subCategory">작은제목</label>
+                <select id="subCategory">
+                    <option value="">먼저 큰제목을 선택하세요</option>
+                </select>
+            </div>
         </div>
 
         <button class="generate-btn" id="generateBtn">생성</button>

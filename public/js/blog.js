@@ -66,6 +66,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const mainCategory = document.getElementById('mainCategory');
     const subCategory = document.getElementById('subCategory');
     const generateBtn = document.getElementById('generateBtn');
+    const categoryGroup = document.getElementById('categoryGroup');
+    const blogTypeRadios = document.querySelectorAll('input[name="blogType"]');
+
+    // 블로그 타입 변경 시 카테고리 그룹 표시/숨김
+    blogTypeRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.value === 'custom') {
+                categoryGroup.classList.remove('hidden');
+            } else {
+                categoryGroup.classList.add('hidden');
+            }
+        });
+    });
 
     // 큰제목 선택 시 작은제목 목록 업데이트
     mainCategory.addEventListener('change', function() {
@@ -84,12 +97,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 생성 버튼 클릭 이벤트
     generateBtn.addEventListener('click', function() {
+        const selectedBlogType = document.querySelector('input[name="blogType"]:checked').value;
         const main = mainCategory.value;
         const sub = subCategory.value;
 
-        if (!main || !sub) {
-            alert('큰제목과 작은제목을 모두 선택해주세요.');
-            return;
+        // 직접입력일 때만 카테고리 검증
+        if (selectedBlogType === 'custom') {
+            if (!main || !sub) {
+                alert('큰제목과 작은제목을 모두 선택해주세요.');
+                return;
+            }
         }
 
         // 로딩 상태 시작
@@ -103,24 +120,25 @@ document.addEventListener('DOMContentLoaded', function() {
         resultArea.classList.remove('show');
 
         // 서버로 요청 보내기
+        const requestBody = {
+            blogType: selectedBlogType
+        };
+
+        // 직접입력일 때만 카테고리 추가
+        if (selectedBlogType === 'custom') {
+            requestBody.mainCategory = main;
+            requestBody.subCategory = sub;
+        }
+
         fetch('/api/blog/generate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                mainCategory: main,
-                subCategory: sub
-            })
+            body: JSON.stringify(requestBody)
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('서버 요청 실패');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('서버 응답:', data);
+        .then(async response => {
+            const data = await response.json();
             
             // 로딩 상태 종료
             generateBtn.disabled = false;
@@ -132,6 +150,18 @@ document.addEventListener('DOMContentLoaded', function() {
             const resultMsg = document.getElementById('resultMsg');
             const resultTitle = document.getElementById('resultTitle');
             const resultContent = document.getElementById('resultContent');
+            
+            if (!response.ok || data.code === 'FAIL') {
+                // 에러인 경우에도 결과 영역에 표시
+                resultMsg.textContent = data.message || '서버 요청 실패';
+                resultTitle.textContent = data.data?.title || (selectedBlogType === 'custom' ? (main + ' - ' + sub) : selectedBlogType.toUpperCase() + ' 블로그');
+                resultContent.textContent = data.data?.content || '오류가 발생했습니다. 서버 로그를 확인해주세요.';
+                resultArea.classList.add('show');
+                resultArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                return;
+            }
+            
+            console.log('서버 응답:', data);
             
             resultMsg.textContent = data.message || '-';
             resultTitle.textContent = data.data?.title || '-';
@@ -150,7 +180,17 @@ document.addEventListener('DOMContentLoaded', function() {
             generateBtn.innerHTML = '생성';
             loadingText.classList.remove('show');
             
-            alert('서버 요청 중 오류가 발생했습니다.');
+            // 결과 영역에 에러 표시
+            const resultArea = document.getElementById('resultArea');
+            const resultMsg = document.getElementById('resultMsg');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultContent = document.getElementById('resultContent');
+            
+            resultMsg.textContent = '네트워크 오류';
+            resultTitle.textContent = selectedBlogType === 'custom' ? (main + ' - ' + sub) : selectedBlogType.toUpperCase() + ' 블로그';
+            resultContent.textContent = '서버와의 통신 중 오류가 발생했습니다: ' + error.message;
+            resultArea.classList.add('show');
+            resultArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         });
     });
 });
