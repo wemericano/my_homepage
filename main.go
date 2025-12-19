@@ -40,12 +40,18 @@ func main() {
 	log.Printf("[MAIN] DB 설정 - Host: %s, Port: %s, User: %s, DBName: %s",
 		dbConfig.Address, dbConfig.Port, dbConfig.User, dbConfig.Scheme)
 
-	database, err := db.Open(dbConfig)
-	if err != nil {
-		log.Fatal("DB 연결 실패:", err)
+	// DB 설정이 비어있으면 연결 시도 건너뛰기
+	if dbConfig.Address == "" || dbConfig.Port == "" {
+		log.Println("[MAIN] DB 설정이 비어있어 연결을 건너뜁니다.")
+	} else {
+		database, err := db.Open(dbConfig)
+		if err != nil {
+			log.Printf("[MAIN] DB 연결 실패 (계속 진행): %v", err)
+		} else {
+			defer database.Close()
+			log.Println("[MAIN] DB SUCCESS")
+		}
 	}
-	defer database.Close()
-	log.Println("[MAIN] DB SUCCESS")
 
 	// 서버 실행
 	if err := r.Run(":" + config.Server.Port); err != nil {

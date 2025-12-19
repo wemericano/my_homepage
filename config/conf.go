@@ -8,9 +8,10 @@ import (
 
 // 전체 Config 구조체
 type Config struct {
-	Server ServerConfig
-	DB     DBConfig
-	GPT    GPTConfig
+	Server  ServerConfig
+	DB      DBConfig
+	GPT     GPTConfig
+	Tistory TistoryConfig
 }
 
 // 서버 관련 설정
@@ -30,6 +31,14 @@ type DBConfig struct {
 // GPT 관련 설정
 type GPTConfig struct {
 	APIKey string
+}
+
+// Tistory 관련 설정
+type TistoryConfig struct {
+	Email    string
+	Password string
+	BlogName string
+	Headless bool
 }
 
 // 메인 로드 함수
@@ -58,6 +67,12 @@ func LoadConfig() *Config {
 		},
 		GPT: GPTConfig{
 			APIKey: getEnv("GPT_API_KEY", ""),
+		},
+		Tistory: TistoryConfig{
+			Email:    getEnv("TISTORY_EMAIL", ""),
+			Password: getEnv("TISTORY_PASSWORD", ""),
+			BlogName: getEnv("TISTORY_BLOG_NAME", ""),
+			Headless: getEnv("TISTORY_HEADLESS", "true") == "true",
 		},
 	}
 }
