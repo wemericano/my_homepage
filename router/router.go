@@ -1,6 +1,8 @@
 package router
 
 import (
+	"net/http"
+
 	"my-homepage/handler"
 
 	"github.com/gin-gonic/gin"
@@ -21,6 +23,11 @@ func SetupRouter(r *gin.Engine) {
 	// Chrome DevTools 요청 처리 (404 방지)
 	r.GET("/.well-known/appspecific/com.chrome.devtools.json", func(c *gin.Context) {
 		c.JSON(200, gin.H{})
+	})
+
+	// 파비콘 요청 처리 (404 방지)
+	r.GET("/favicon.ico", func(c *gin.Context) {
+		c.Status(http.StatusNoContent)
 	})
 
 	api := r.Group("/api")

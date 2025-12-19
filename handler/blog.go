@@ -74,7 +74,7 @@ func GenerateBlog(c *gin.Context) {
 	}
 
 	// GPT API 호출
-	title, content, err := callGPTAPI(cfg.GPT.APIKey, request.BlogType, request.MainCategory, request.SubCategory)
+	title, content, err := CallGPTAPI(cfg.GPT.APIKey, request.BlogType, request.MainCategory, request.SubCategory)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"code":    "FAIL",
@@ -117,8 +117,8 @@ func getDefaultTitle(blogType, mainCategory, subCategory string) string {
 	}
 }
 
-// GPT API 호출 함수
-func callGPTAPI(apiKey, blogType, mainCategory, subCategory string) (string, string, error) {
+// CallGPTAPI GPT API 호출 함수 (외부에서 사용 가능하도록 export)
+func CallGPTAPI(apiKey, blogType, mainCategory, subCategory string) (string, string, error) {
 	// 오늘 날짜 가져오기
 	today := time.Now()
 	dateStr := today.Format("2006년 1월 2일")

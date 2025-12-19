@@ -6,6 +6,7 @@ import (
 	"my-homepage/config"
 	db "my-homepage/database"
 	"my-homepage/router"
+	"my-homepage/scheduler"
 
 	_ "github.com/denisenkom/go-mssqldb"
 	"github.com/gin-gonic/gin"
@@ -24,6 +25,12 @@ func main() {
 	// 라우터 설정
 	router.SetupRouter(r)
 	log.Println("[MAIN] ROUTER SUCCESS")
+
+	// 자동 블로그 생성 스케줄러 시작
+	batchScheduler := scheduler.NewBatchScheduler()
+	batchScheduler.Start()
+	defer batchScheduler.Stop()
+	log.Println("[MAIN] SCHEDULER STARTED")
 
 	// DB 초기화
 	dbConfig := db.DBConfig{
