@@ -9,6 +9,7 @@
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
         }
         .top-bar {
             background: #333;
@@ -28,12 +29,172 @@
         .top-bar a:hover {
             text-decoration: underline;
         }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            background: white;
+        }
+        .form-group select:focus {
+            outline: none;
+            border-color: #7ab8ff;
+        }
+        .generate-btn {
+            width: 100%;
+            padding: 14px;
+            background: #7ab8ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .generate-btn:hover {
+            background: #6ba8ff;
+        }
+        .generate-btn:active {
+            transform: translateY(1px);
+        }
+        .generate-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ffffff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .loading-text {
+            display: none;
+            text-align: center;
+            color: #7ab8ff;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+        .loading-text.show {
+            display: block;
+        }
+        .result-area {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            display: none;
+        }
+        .result-area.show {
+            display: block;
+        }
+        .result-item {
+            margin-bottom: 15px;
+        }
+        .result-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .result-value {
+            color: #666;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #eee;
+        }
+        .result-content {
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
     <!-- 상단 바 -->
     <div class="top-bar">
         <a href="https://notion1349.tistory.com/manage" target="_blank">Go to my tistory</a>
+    </div>
+
+    <!-- 메인 컨텐츠 -->
+    <div class="container">
+        <h1 style="margin-bottom: 30px; text-align: center;">블로그 생성</h1>
+        
+        <div class="form-group">
+            <label for="mainCategory">큰제목</label>
+            <select id="mainCategory">
+                <option value="">선택하세요</option>
+                <option value="IT">IT</option>
+                <option value="개발">개발</option>
+                <option value="프로그래밍">프로그래밍</option>
+                <option value="웹개발">웹개발</option>
+                <option value="모바일">모바일</option>
+                <option value="인공지능">인공지능</option>
+                <option value="보안">보안</option>
+                <option value="데이터베이스">데이터베이스</option>
+                <option value="클라우드">클라우드</option>
+                <option value="DevOps">DevOps</option>
+                <option value="프론트엔드">프론트엔드</option>
+                <option value="백엔드">백엔드</option>
+                <option value="풀스택">풀스택</option>
+                <option value="알고리즘">알고리즘</option>
+                <option value="네트워크">네트워크</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="subCategory">작은제목</label>
+            <select id="subCategory">
+                <option value="">먼저 큰제목을 선택하세요</option>
+            </select>
+        </div>
+
+        <button class="generate-btn" id="generateBtn">생성</button>
+        
+        <!-- 로딩 텍스트 -->
+        <div class="loading-text" id="loadingText">블로그를 생성하는 중입니다...</div>
+
+        <!-- 결과 표시 영역 -->
+        <div class="result-area" id="resultArea">
+            <div class="result-item">
+                <div class="result-label">메시지</div>
+                <div class="result-value" id="resultMsg">-</div>
+            </div>
+            <div class="result-item">
+                <div class="result-label">제목</div>
+                <div class="result-value" id="resultTitle">-</div>
+            </div>
+            <div class="result-item">
+                <div class="result-label">내용</div>
+                <div class="result-value result-content" id="resultContent">-</div>
+            </div>
+        </div>
     </div>
 
     <script type="module" src="../js/blog.js"></script>

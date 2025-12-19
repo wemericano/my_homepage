@@ -301,7 +301,7 @@ function createBlogModal() {
         const key = document.getElementById("secretKey").value;
         const errorMsg = document.getElementById("blogError");
         
-        if (key === "z") {
+        if (key === "z" || key === "ㅋ") {
             location.href = "./page/blog.html";
         } else {
             errorMsg.innerText = "NOP!";
