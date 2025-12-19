@@ -8,6 +8,7 @@ import (
 	"my-homepage/config"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -118,11 +119,18 @@ func getDefaultTitle(blogType, mainCategory, subCategory string) string {
 
 // GPT API 호출 함수
 func callGPTAPI(apiKey, blogType, mainCategory, subCategory string) (string, string, error) {
+	// 오늘 날짜 가져오기
+	today := time.Now()
+	dateStr := today.Format("2006년 1월 2일")
+
+	// 프롬프트 시작 부분에 날짜 추가
+	datePrefix := fmt.Sprintf("오늘은 %s입니다. 오늘 기준으로 ", dateStr)
+
 	var prompt string
 
 	switch blogType {
 	case "hot":
-		prompt = `
+		prompt = datePrefix + `
 					현재 가장 핫한 내용을 작성해
 					요새 핫한 블로그처럼 제목과 내용을 작성해주세요.
 					내용은 500자 이상으로 작성해주세요.
@@ -131,7 +139,7 @@ func callGPTAPI(apiKey, blogType, mainCategory, subCategory string) (string, str
 					독자들이 읽기 쉽고 흥미롭게 작성
 				`
 	case "news":
-		prompt = `
+		prompt = datePrefix + `
 					지금 웹에서 뉴스들 검색해보고 가장 핫한 뉴스에 관해 블로그를 만들어
 					요새 핫한 블로그 처럼 제목과 내용을 작성해
 					내용은 500자 이상으로 작성해주세요.
@@ -140,17 +148,19 @@ func callGPTAPI(apiKey, blogType, mainCategory, subCategory string) (string, str
 					독자들이 읽기 쉽고 흥미롭게 작성
 				`
 	case "sports":
-		prompt = `
-					오늘 NBA, KBO, MLB 등 주요 스포츠 리그의 최신 소식과 뉴스를 검색해서 블로그를 작성해주세요.
-					경기 결과, 선수 소식, 트레이드 뉴스, 주요 이슈 등을 다루어주세요.
+		prompt = datePrefix + `
+					오늘(%s) NBA, KBO, MLB 등 주요 스포츠 리그의 실제 경기 일정과 결과를 확인해서 블로그를 작성해주세요.
+					오늘 실제로 진행된 경기 결과만 다루고, 오늘 경기가 없으면 경기 일정이나 최근 소식, 선수 소식, 트레이드 뉴스 등을 다루어주세요.
+					경기가 없는데 경기 결과를 만들어내지 마세요.
 					요새 핫한 블로그처럼 제목과 내용을 작성해주세요.
 					내용은 500자 이상으로 작성해주세요.
 					적절한 이모티콘/이모지를 사용하여 가독성 향상 (예: ⚽, 🏀, ⚾, 🏈, 🎯 등)
 					섹션 구분을 위해 이모티콘 활용
 					독자들이 읽기 쉽고 흥미롭게 작성
 				`
+		prompt = fmt.Sprintf(prompt, dateStr)
 	case "lotto":
-		prompt = `
+		prompt = datePrefix + `
 					로또 당첨번호 분석, 번호 추천, 통계, 꿈 해몽, 행운의 숫자 등 로또 관련 내용으로 블로그를 작성해주세요.
 					최근 당첨번호 패턴 분석이나 행운의 번호 추천 등을 포함해주세요.
 					요새 핫한 블로그처럼 제목과 내용을 작성해주세요.
@@ -160,7 +170,7 @@ func callGPTAPI(apiKey, blogType, mainCategory, subCategory string) (string, str
 					독자들이 읽기 쉽고 흥미롭게 작성
 				`
 	case "fortune":
-		prompt = `
+		prompt = datePrefix + `
 					오늘의 운세, 별자리 운세, 타로, 사주, 꿈 해몽 등 운세 관련 내용으로 블로그를 작성해주세요.
 					오늘의 행운의 색상, 숫자, 방향, 조언 등을 포함해주세요.
 					요새 핫한 블로그처럼 제목과 내용을 작성해주세요.
@@ -170,7 +180,7 @@ func callGPTAPI(apiKey, blogType, mainCategory, subCategory string) (string, str
 					독자들이 읽기 쉽고 흥미롭게 작성
 				`
 	case "custom":
-		prompt = fmt.Sprintf(`
+		prompt = datePrefix + fmt.Sprintf(`
 								다음 주제에 대한 블로그 포스트를 작성해주세요.
 
 								카테고리: %s

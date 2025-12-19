@@ -161,8 +161,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            console.log('서버 응답:', data);
-            
             resultMsg.textContent = data.message || '-';
             resultTitle.textContent = data.data?.title || '-';
             resultContent.textContent = data.data?.content || '-';
@@ -171,6 +169,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // 결과 영역으로 스크롤
             resultArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            // 티스토리 업로드 호출
+            console.log("티스토리 업로드 호출 시도");
+            uploadToTistory(data.data?.title || '', data.data?.content || '');
         })
         .catch(error => {
             console.error('에러:', error);
@@ -194,4 +196,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// 티스토리 업로드 함수
+function uploadToTistory(title, content) {
+    console.log("uploadToTistory", title);
+    
+    fetch('/api/tistory/upload', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            title: title,
+            content: content
+        })
+    })
+    .then(async response => {
+        const data = await response.json();
+        console.log('티스토리 업로드 응답:', data);
+    })
+    .catch(error => {
+        console.error('티스토리 업로드 에러:', error);
+    });
+}
 

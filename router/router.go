@@ -38,4 +38,7 @@ func SetupRouter(r *gin.Engine) {
 
 	// blog
 	api.POST("/blog/generate", handler.GenerateBlog)
+
+	// tistory
+	api.POST("/tistory/upload", handler.UploadToTistory)
 }
