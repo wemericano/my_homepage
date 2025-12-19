@@ -45,7 +45,7 @@ func GenerateBlog(c *gin.Context) {
 	}
 
 	// blogType 검증
-	if request.BlogType != "hot" && request.BlogType != "news" && request.BlogType != "custom" {
+	if request.BlogType != "hot" && request.BlogType != "news" && request.BlogType != "sports" && request.BlogType != "lotto" && request.BlogType != "fortune" && request.BlogType != "custom" {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "FAIL", "message": "잘못된 블로그 타입입니다."})
 		return
 	}
@@ -103,6 +103,12 @@ func getDefaultTitle(blogType, mainCategory, subCategory string) string {
 		return "Hot 블로그"
 	case "news":
 		return "News 블로그"
+	case "sports":
+		return "스포츠 블로그"
+	case "lotto":
+		return "로또 블로그"
+	case "fortune":
+		return "운세 블로그"
 	case "custom":
 		return mainCategory + " - " + subCategory
 	default:
@@ -133,11 +139,42 @@ func callGPTAPI(apiKey, blogType, mainCategory, subCategory string) (string, str
 					섹션 구분을 위해 이모티콘 활용
 					독자들이 읽기 쉽고 흥미롭게 작성
 				`
+	case "sports":
+		prompt = `
+					오늘 NBA, KBO, MLB 등 주요 스포츠 리그의 최신 소식과 뉴스를 검색해서 블로그를 작성해주세요.
+					경기 결과, 선수 소식, 트레이드 뉴스, 주요 이슈 등을 다루어주세요.
+					요새 핫한 블로그처럼 제목과 내용을 작성해주세요.
+					내용은 500자 이상으로 작성해주세요.
+					적절한 이모티콘/이모지를 사용하여 가독성 향상 (예: ⚽, 🏀, ⚾, 🏈, 🎯 등)
+					섹션 구분을 위해 이모티콘 활용
+					독자들이 읽기 쉽고 흥미롭게 작성
+				`
+	case "lotto":
+		prompt = `
+					로또 당첨번호 분석, 번호 추천, 통계, 꿈 해몽, 행운의 숫자 등 로또 관련 내용으로 블로그를 작성해주세요.
+					최근 당첨번호 패턴 분석이나 행운의 번호 추천 등을 포함해주세요.
+					요새 핫한 블로그처럼 제목과 내용을 작성해주세요.
+					내용은 500자 이상으로 작성해주세요.
+					적절한 이모티콘/이모지를 사용하여 가독성 향상 (예: 🎰, 🍀, ⭐, 💰, 🎯 등)
+					섹션 구분을 위해 이모티콘 활용
+					독자들이 읽기 쉽고 흥미롭게 작성
+				`
+	case "fortune":
+		prompt = `
+					오늘의 운세, 별자리 운세, 타로, 사주, 꿈 해몽 등 운세 관련 내용으로 블로그를 작성해주세요.
+					오늘의 행운의 색상, 숫자, 방향, 조언 등을 포함해주세요.
+					요새 핫한 블로그처럼 제목과 내용을 작성해주세요.
+					내용은 500자 이상으로 작성해주세요.
+					적절한 이모티콘/이모지를 사용하여 가독성 향상 (예: 🔮, ✨, ⭐, 🌟, 🍀, 🔯 등)
+					섹션 구분을 위해 이모티콘 활용
+					독자들이 읽기 쉽고 흥미롭게 작성
+				`
 	case "custom":
 		prompt = fmt.Sprintf(`
 								다음 주제에 대한 블로그 포스트를 작성해주세요.
 
 								카테고리: %s
+								
 								주제: %s
 
 								제목과 내용을 포함하여 작성해주세요.

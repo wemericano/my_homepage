@@ -18,6 +18,11 @@ func SetupRouter(r *gin.Engine) {
 		c.File("./public/index.html")
 	})
 
+	// Chrome DevTools 요청 처리 (404 방지)
+	r.GET("/.well-known/appspecific/com.chrome.devtools.json", func(c *gin.Context) {
+		c.JSON(200, gin.H{})
+	})
+
 	api := r.Group("/api")
 
 	// 회원가입
