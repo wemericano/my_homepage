@@ -30,7 +30,7 @@ class MainPageController extends BasePageController {
             pastDataPoints: 100,             // 과거 데이터 포인트 수
             futureDataPoints: 60,             // 미래 데이터 포인트 수 (5초 단위)
 
-            timeIntervalSeconds: 5            // 시간 간격 (초)
+            timeIntervalSeconds: 1            // 시간 간격 (초)
         };
         
         this.initTradeTypeSelector();

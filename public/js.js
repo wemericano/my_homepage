@@ -8,6 +8,7 @@ const defenseBtn = document.getElementById("defense");
 
 let signupModal = null;
 let loginModal = null;
+let blogModal = null;
 
 // 회원가입 버튼 클릭 시
 if (signupBtn) {
@@ -272,6 +273,71 @@ function signup() {
     }
 }
 
+// 블로그 모달 생성
+function createBlogModal() {
+    if (blogModal) return;
+
+    blogModal = document.createElement("div");
+    blogModal.id = "blogModal";
+    blogModal.className =
+        "fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex justify-center items-center";
+
+    blogModal.innerHTML = `
+        <div class="bg-white dark:bg-gray-800 text-black dark:text-white rounded-lg shadow-lg p-6 w-full max-w-xs mx-4 relative">
+            <h2 class="text-lg font-bold mb-4 text-center">Secret Key</h2>
+            <div class="space-y-4">
+                <input type="text" id="secretKey" class="w-full px-4 py-2 rounded border dark:bg-gray-700" placeholder="키를 입력하세요" />
+                <p id="blogError" class="text-red-500 text-sm text-center hidden"></p>
+            </div>
+            <div class="flex justify-end space-x-4 mt-4">
+                <button id="checkSecretKey" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded text-sm">확인</button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(blogModal);
+
+    document.getElementById("checkSecretKey").addEventListener("click", () => {
+        const key = document.getElementById("secretKey").value;
+        const errorMsg = document.getElementById("blogError");
+        
+        if (key === "z") {
+            location.href = "./page/blog.html";
+        } else {
+            errorMsg.innerText = "NOP!";
+            errorMsg.classList.remove("hidden");
+            setTimeout(() => {
+                location.href = "./";
+            }, 1000);
+        }
+    });
+
+    // Enter 키로 확인
+    document.getElementById("secretKey").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            document.getElementById("checkSecretKey").click();
+        }
+    });
+}
+
+// 블로그 모달 열기
+function openBlogModal() {
+    if (!blogModal) {
+        createBlogModal();
+    }
+    blogModal.classList.remove("hidden");
+    const errorMsg = document.getElementById("blogError");
+    if (errorMsg) {
+        errorMsg.classList.add("hidden");
+        errorMsg.innerText = "";
+    }
+    const input = document.getElementById("secretKey");
+    if (input) {
+        input.value = "";
+        input.focus();
+    }
+}
+
 // 전역 함수로 노출
 if (typeof window !== 'undefined') {
     window.enterkey = enterkey;
@@ -287,4 +353,5 @@ if (typeof window !== 'undefined') {
     window.luck = luck;
     window.signup = signup;
     window.binary_option = binary_option;
+    window.openBlogModal = openBlogModal;
 }
